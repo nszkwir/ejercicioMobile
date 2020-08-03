@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/BandejaProductosFragment">
+
+    <fragment
+        android:id="@+id/BandejaProductosFragment"
+        android:name="com.spitzer.examenmobilemeli.presentation.bandeja.BandejaProductosFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_bandeja_productos">
+
+        <action
+            android:id="@+id/action_BandejaProductosFragment_to_ProductoFragment"
+            app:destination="@id/ProductoFragment">
+        </action>
+        <action
+            android:id="@+id/action_BandejaProductosFragment_to_BuscadorFragment"
+            app:destination="@id/BuscadorFragment"
+            app:popUpTo="@id/BandejaProductosFragment">
+            <argument
+                android:name="historialBusqueda"
+                app:argType="com.spitzer.examenmobilemeli.models.HistorialBusqueda" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/ProductoFragment"
+        android:name="com.spitzer.examenmobilemeli.presentation.producto.ProductoFragment"
+        android:label="@string/producto_fragment_label"
+        tools:layout="@layout/fragment_producto">
+
+        <action
+            android:id="@+id/action_ProductoFragment_to_BandejaProductosFragment"
+            app:destination="@id/BandejaProductosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/BuscadorFragment"
+        android:name="com.spitzer.examenmobilemeli.presentation.buscador.BuscadorFragment"
+        android:label="@string/buscador_fragment_label"
+        tools:layout="@layout/fragment_buscador">
+
+        <action
+            android:id="@+id/action_BuscadorFragment_to_BandejaProductosFragment"
+            app:destination="@id/BandejaProductosFragment" />
+        <argument
+            android:name="historialBusqueda"
+            app:argType="com.spitzer.examenmobilemeli.models.HistorialBusqueda" />
+
+    </fragment>
+
+</navigation>

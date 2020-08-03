@@ -1,0 +1,155 @@
+package com.spitzer.examenmobilemeli.presentation.bandeja
+
+import android.content.Context
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.google.gson.GsonBuilder
+import com.spitzer.examenmobilemeli.R
+import com.spitzer.examenmobilemeli.databinding.FragmentBandejaProductosBinding
+import com.spitzer.examenmobilemeli.interfaces.IClickListener
+import com.spitzer.examenmobilemeli.models.HistorialBusqueda
+import com.spitzer.examenmobilemeli.utils.AppConstants
+import com.spitzer.examenmobilemeli.utils.AppConstants.GLOBAL_SHARED_PREFERENCES
+import com.spitzer.examenmobilemeli.utils.hideKeyboard
+import com.spitzer.network.Estado
+import java.lang.Exception
+
+
+class BandejaProductosFragment : Fragment() {
+
+    private val gSON = GsonBuilder().create()
+    private lateinit var mViewModel: BandejaProductosViewModel
+    private lateinit var mViewModelBusqueda: HistorialBusquedaViewModel
+    private lateinit var binding: FragmentBandejaProductosBinding
+    private lateinit var bandejaProductosAdapter: BandejaProductosAdapter
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bandeja_productos, container, false)
+
+        mViewModel = ViewModelProvider(this, BandejaProductosViewModelFactory()).get(BandejaProductosViewModel::class.java)
+        mViewModelBusqueda = ViewModelProviders.of(requireActivity()).get(HistorialBusquedaViewModel::class.java)
+        mViewModelBusqueda.historialBusqueda = obtenerHistorialBusqueda()
+
+        bandejaProductosAdapter = BandejaProductosAdapter(
+            mViewModel.resultadoBusqueda,
+            object: IClickListener {
+                override fun onClick(v: View, index: Int) {
+                    //setearStringBusqueda(adapter!!.items!![index])
+                    //findNavController().
+                }
+            })
+
+        definirObservables()
+        definirBindings()
+        return binding.root
+    }
+
+    fun definirBindings() {
+
+        if (binding.rvProductos.adapter == null) {
+            binding.rvProductos.apply {
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                adapter = bandejaProductosAdapter
+            }
+        }
+
+        binding.clBuscador.setOnClickListener {
+            val action = BandejaProductosFragmentDirections.
+            actionBandejaProductosFragmentToBuscadorFragment(
+                mViewModelBusqueda.historialBusqueda)
+            findNavController().navigate(action)
+        }
+
+        binding.etSearch.text = mViewModel.textoBusqueda
+    }
+
+    fun definirObservables() {
+
+        mViewModelBusqueda.busqueda.observe(
+            viewLifecycleOwner,
+            Observer {
+                it.getContentIfNotHandled()?.let { textoBusqueda ->
+                    binding.etSearch.text = textoBusqueda
+                    if (textoBusqueda.isNotBlank()) {
+                        if (mViewModelBusqueda.historialBusqueda.busqueda_string.filter { it == textoBusqueda }
+                                .isEmpty()) {
+                            mViewModelBusqueda.historialBusqueda.busqueda_string.add(textoBusqueda)
+                            actualizarHistorialBusqueda(mViewModelBusqueda.historialBusqueda)
+                        }
+                        mViewModel.buscarProductos(textoBusqueda)
+                    }
+                }
+            })
+
+        mViewModel.respuestaProductos.observe(
+            viewLifecycleOwner, Observer {
+                   it.getContentIfNotHandled()?.let { estado ->
+                       handleResponseBusquedaProducto(estado)
+                   }
+            })
+    }
+
+    fun handleResponseBusquedaProducto(estado: Estado) {
+        when (estado) {
+            Estado.CARGANDO -> {
+                Snackbar.make(this.requireView(), "CARGANDO", Snackbar.LENGTH_SHORT).show()
+            }
+            Estado.EXITO -> {
+                Snackbar.make(this.requireView(), "EXITO", Snackbar.LENGTH_SHORT).show()
+            }
+            Estado.NO_AUTENTICADO -> {
+                Snackbar.make(this.requireView(), "NO AUTENTICADO", Snackbar.LENGTH_SHORT)
+                    .show()
+            }
+            Estado.ERROR -> {
+                Snackbar.make(this.requireView(), "ERROR", Snackbar.LENGTH_SHORT).show()
+            }
+            Estado.SIN_CONEXION_INTERNET -> {
+                Snackbar.make(this.requireView(), "SIN CONEXION", Snackbar.LENGTH_SHORT).show()
+            }
+            else -> Log.e(AppConstants.ETAG_RESPONSE_HANDLING_EVENT, "Estado no manejado")
+        }
+        (binding.rvProductos.adapter as BandejaProductosAdapter).setData(mViewModel.resultadoBusqueda.results)
+
+    }
+
+    private fun obtenerHistorialBusqueda(): HistorialBusqueda {
+        val preferences = this.requireActivity().getSharedPreferences(GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE) ?: return HistorialBusqueda()
+        var historialSerializado: String
+        return try {
+            historialSerializado = preferences.getString(AppConstants.HISTORIAL_BUSQUEDA_KEY, "")?: ""
+            gSON.fromJson(historialSerializado, HistorialBusqueda::class.java)
+        } catch (e: Exception) {
+            Log.e(AppConstants.ETAG_SHARED_PREFERENCES, e.localizedMessage?:"Excepcion al obtener el historial de búsqueda en Shared Preferences Globales.")
+            HistorialBusqueda()
+        }
+    }
+
+    private fun actualizarHistorialBusqueda(historial: HistorialBusqueda): Boolean {
+        val historialSerializado = gSON.toJson(historial)
+        val preferences = this.requireActivity().getSharedPreferences(GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE) ?: return false
+        return try {
+            with(preferences.edit()) {
+                putString(AppConstants.HISTORIAL_BUSQUEDA_KEY, historialSerializado)
+                commit()
+            }
+            true
+        } catch (e: Exception) {
+            Log.e(AppConstants.ETAG_SHARED_PREFERENCES, e.localizedMessage?:"Excepcion al actualizar el historial de búsqueda en Shared Preferences Globales.")
+            false
+        }
+    }
+
+}
