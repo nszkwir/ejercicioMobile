@@ -34,10 +34,8 @@
             android:id="@+id/tvDescripcionArticulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:maxLines="2"
-            android:text="Sony Bravia 55' Full HD 4K - Smart + AndroidTV - Chromecast integrado"
-            android:textSize="14sp"
+            android:text="@string/prueba_titulo_articulo"
+            style="@style/TextoTituloBandeja"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,9 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:maxLines="1"
             android:text="$"
-            android:textSize="24sp"
+            style="@style/TextoPrecioBandeja"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDescripcionArticulo" />
 
@@ -58,9 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="6dp"
-            android:maxLines="1"
-            android:text="139.999"
-            android:textSize="24sp"
+            android:text="@string/prueba_precio_articulo"
+            style="@style/TextoPrecioBandeja"
             app:layout_constraintStart_toEndOf="@+id/tvCash"
             app:layout_constraintTop_toBottomOf="@+id/tvDescripcionArticulo" />
 
@@ -69,10 +65,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:maxLines="2"
-            android:text="Santa Fe Santa Fe Capital"
-            android:textColor="@color/textoGrisClaro"
-            android:textSize="10sp"
+            android:maxLines="1"
+            android:text="@string/prueba_ubicacion_articulo"
+            style="@style/TextoDetalleBandeja"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvPrecio" />
 
@@ -82,9 +77,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:maxLines="2"
-            android:text="Usado"
-            android:textColor="@color/textoGrisClaro"
-            android:textSize="10sp"
+            android:text="@string/prueba_condicion_articulo"
+            style="@style/TextoDetalleBandeja"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUbicacion" />
 
@@ -94,9 +88,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:maxLines="2"
-            android:text="Envío gratis"
-            android:textColor="@color/textoVerde"
-            android:textSize="10sp"
+            android:text="@string/prueba_envio_articulo"
+            style="@style/TextoEnvioBandeja"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCondicion" />
 

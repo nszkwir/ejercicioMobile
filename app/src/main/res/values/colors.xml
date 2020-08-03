@@ -10,11 +10,15 @@
     <color name="itemBackground">#f5f5f5</color>
     <color name="white">#ffffff</color>
 
+    <color name="azulBotones">#3A7ACC</color>
 
     <color name="textoPrincipal">#111111</color>
     <color name="textoDestacado">#242424</color>
     <color name="textoGris">#555555</color>
     <color name="textoGrisClaro">#858585</color>
     <color name="textoVerde">#80D080</color>
+
+
+    <color name="grisDivisor">#858585</color>
 
 </resources>

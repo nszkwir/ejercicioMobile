@@ -1,7 +1,8 @@
 package com.spitzer.examenmobilemeli.data
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-
 
 data class Result(
     @SerializedName("accepts_mercadopago")
@@ -56,4 +57,70 @@ data class Result(
     var thumbnail: String = "",
     @SerializedName("title")
     var title: String = ""
-)
+) : Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readByte() != 0.toByte(),
+        TODO("address"),
+        TODO("attributes"),
+        parcel.readInt(),
+        parcel.readString()?:"",
+        parcel.readByte() != 0.toByte(),
+        parcel.readString()?:"",
+        parcel.readString()?:"",
+        parcel.readString()?:"",
+        parcel.readString()?:"",
+        parcel.readString()?:"",
+        TODO("installments"),
+        parcel.readString()?:"",
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        TODO("originalPrice"),
+        parcel.readString()?:"",
+        parcel.readDouble(),
+        TODO("seller"),
+        TODO("sellerAddress"),
+        TODO("shipping"),
+        parcel.readString()?:"",
+        parcel.readInt(),
+        parcel.readString()?:"",
+        parcel.createStringArrayList()?: arrayListOf(),
+        parcel.readString()?:"",
+        parcel.readString()?:""
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeByte(if (acceptsMercadopago) 1 else 0)
+        parcel.writeInt(availableQuantity)
+        parcel.writeString(buyingMode)
+        parcel.writeByte(if (catalogListing) 1 else 0)
+        parcel.writeString(catalogProductId)
+        parcel.writeString(categoryId)
+        parcel.writeString(condition)
+        parcel.writeString(currencyId)
+        parcel.writeString(id)
+        parcel.writeString(listingTypeId)
+        parcel.writeValue(officialStoreId)
+        parcel.writeString(permalink)
+        parcel.writeDouble(price)
+        parcel.writeString(siteId)
+        parcel.writeInt(soldQuantity)
+        parcel.writeString(stopTime)
+        parcel.writeStringList(tags)
+        parcel.writeString(thumbnail)
+        parcel.writeString(title)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Result> {
+        override fun createFromParcel(parcel: Parcel): Result {
+            return Result(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Result?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

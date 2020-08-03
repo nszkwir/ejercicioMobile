@@ -8,6 +8,7 @@ import com.spitzer.examenmobilemeli.R
 import com.spitzer.examenmobilemeli.data.BusquedaArticulos
 import com.spitzer.examenmobilemeli.data.Result
 import com.spitzer.examenmobilemeli.interfaces.IClickListener
+import com.spitzer.examenmobilemeli.utils.toCash
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_articulo_bandeja.view.*
 
@@ -45,14 +46,15 @@ class BandejaProductosAdapter(resultadoBusqueda: BusquedaArticulos, var listener
             .into(holder.itemView.ivArticulo)
 
         holder.itemView.tvDescripcionArticulo.text = articulo.title
-        holder.itemView.tvPrecio.text = articulo.price.toString()
+        holder.itemView.tvPrecio.text = articulo.price.toCash()
         holder.itemView.tvCondicion.text = condicion
         holder.itemView.tvUbicacion.text = "${articulo.sellerAddress.state.name} - ${articulo.sellerAddress.city.name}"
         holder.itemView.tvEnvio.visibility = if (articulo.shipping.freeShipping) View.VISIBLE else View.GONE
 
-        holder.itemView.clArticulo.setOnClickListener {
-        }
+    }
 
+    fun getItem(position: Int): Result {
+        return listaArticulos[position]
     }
 
     override fun getItemId(position: Int): Long {

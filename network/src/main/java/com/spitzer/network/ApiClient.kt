@@ -11,7 +11,7 @@ class ApiClient {
 
     private var gson: Gson? = null
     private var retrofit: Retrofit? = null
-    private var accesstoken: String? = null
+    //private var accesstoken: String? = null
 
     constructor() {
         this.gson = GsonBuilder()

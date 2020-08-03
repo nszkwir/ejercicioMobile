@@ -17,4 +17,94 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <!-- Styles para TextViews. -->
+    <style name="TextoApp">
+<!--        <item name="android:fontFamily">Roboto</item>-->
+    </style>
+
+    <style name="TextoGrisClaro" parent="TextoApp">
+        <item name="android:textColor">@color/textoGrisClaro</item>
+    </style>
+
+    <style name="TextoGris" parent="TextoApp">
+        <item name="android:textColor">@color/textoGris</item>
+    </style>
+
+    <style name="TextoOscuro" parent="TextoApp">
+        <item name="android:textColor">@color/textoDestacado</item>
+    </style>
+
+    <style name="TextoNegro" parent="TextoApp">
+        <item name="android:textColor">@color/textoPrincipal</item>
+    </style>
+
+    <style name="TextoPrecio" parent="TextoNegro">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/texto_precio</item>
+    </style>
+
+    <style name="TextoPrecioBandeja" parent="TextoNegro">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/texto_precio_bandeja</item>
+    </style>
+
+    <style name="TextoTitulo" parent="TextoOscuro">
+        <item name="android:maxLines">2</item>
+        <item name="android:textSize">@dimen/texto_titulo</item>
+    </style>
+
+    <style name="TextoTituloBandeja" parent="TextoOscuro">
+        <item name="android:textSize">@dimen/texto_titulo_bandeja</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:layout_marginTop">6dp</item>
+    </style>
+
+    <style name="TextoDetalle" parent="TextoGris">
+        <item name="android:textSize">@dimen/texto_detalle</item>
+    </style>
+
+    <style name="TextoDetalleBandeja" parent="TextoGris">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/texto_detalle_bandeja</item>
+    </style>
+
+    <style name="TextoEnvioBandeja">
+        <item name="android:textColor">@color/textoVerde</item>
+        <item name="android:textSize">@dimen/texto_detalle_bandeja</item>
+    </style>
+
+    <style name="TextoSecundario" parent="TextoGrisClaro">
+        <item name="android:textSize">@dimen/texto_secundario</item>
+    </style>
+
+    <style name="TextoSubtitulo" parent="TextoOscuro">
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/texto_subtitulo</item>
+    </style>
+
+
+    <style name="Button">
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="ButtonComprarAhora" parent="Button">
+        <item name="android:text">@string/boton_comprar_ahora</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/btn_comprar_ahora_bg</item>
+        <item name="android:textSize">@dimen/texto_btn_comprar_ahora</item>
+    </style>
+
+    <style name="ButtonAgegarCarrito" parent="Button">
+        <item name="android:text">@string/boton_agregar_carrito</item>
+        <item name="android:textColor">@color/azulBotones</item>
+        <item name="android:background">@drawable/btn_agregar_carrito_bg</item>
+        <item name="android:textSize">@dimen/texto_btn_agregar_carrito</item>
+
+    </style>
+
+
 </resources>

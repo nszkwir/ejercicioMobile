@@ -1,3 +1,17 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="padding_principal_producto">18dp</dimen>
+
+    <dimen name="texto_precio">28sp</dimen>
+    <dimen name="texto_precio_bandeja">24sp</dimen>
+    <dimen name="texto_titulo">20sp</dimen>
+    <dimen name="texto_titulo_bandeja">14sp</dimen>
+    <dimen name="texto_detalle">14sp</dimen>
+    <dimen name="texto_detalle_bandeja">10sp</dimen>
+    <dimen name="texto_subtitulo">18sp</dimen>
+    <dimen name="texto_secundario">12sp</dimen>
+
+    <dimen name="texto_btn_comprar_ahora">18sp</dimen>
+    <dimen name="texto_btn_agregar_carrito">18sp</dimen>
 </resources>

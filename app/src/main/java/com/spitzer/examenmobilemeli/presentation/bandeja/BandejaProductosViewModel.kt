@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.spitzer.examenmobilemeli.data.BusquedaArticulos
 import com.spitzer.examenmobilemeli.repository.ProductoRepository
 import com.spitzer.examenmobilemeli.utils.Event
+import com.spitzer.network.Resultado
 import com.spitzer.network.Estado
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -30,12 +31,19 @@ class BandejaProductosViewModel(override val coroutineContext: CoroutineContext)
 
     private fun getProductos(query: String) = launch  {
         val result = mRepository.getProduct(query)
-        if (result.isSuccessful) {
-            resultadoBusqueda = result.body()?: BusquedaArticulos()
-            estadoRespuestaProductos.value = Event(Estado.EXITO)
-        } else {
-            resultadoBusqueda = BusquedaArticulos()
-            estadoRespuestaProductos.value = Event(Estado.ERROR)
+        when(result) {
+            is Resultado.Value -> {
+                if (result.value.isSuccessful) {
+                    resultadoBusqueda = result.value.body()?: BusquedaArticulos()
+                    estadoRespuestaProductos.value = Event(Estado.EXITO)
+                } else {
+                    resultadoBusqueda = BusquedaArticulos()
+                    estadoRespuestaProductos.value = Event(Estado.ERROR)
+                }
+            }
+            is Resultado.Error -> {
+                estadoRespuestaProductos.value = Event(Estado.SIN_CONEXION_INTERNET)
+            }
         }
     }
 

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.spitzer.examenmobilemeli.data.Result
 
 class ProductoViewModel : ViewModel() {
-
-    var articulo: Result = Result()
-
-
+    var producto: Result = Result()
+    fun getProductInfo(): String {
+        return producto.attributes.map{ "${it.name}: ${it.valueName}"}.joinToString("\n")
+    }
 }

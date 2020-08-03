@@ -1,5 +1,7 @@
 package com.spitzer.examenmobilemeli.utils
 
+import java.text.DecimalFormat
+
 object AppConstants {
 
     const val GLOBAL_SHARED_PREFERENCES = "GLOBAL_SHARED_PREFERENCES"
@@ -10,4 +12,5 @@ object AppConstants {
     // Log.e TAGS
     const val ETAG_RESPONSE_HANDLING_EVENT = "RESPONSE_HANDLING_EVENT"
     const val ETAG_SHARED_PREFERENCES = "SHARED_PREFERENCES"
+
 }

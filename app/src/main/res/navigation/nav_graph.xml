@@ -8,12 +8,15 @@
     <fragment
         android:id="@+id/BandejaProductosFragment"
         android:name="com.spitzer.examenmobilemeli.presentation.bandeja.BandejaProductosFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/bandeja_productos"
         tools:layout="@layout/fragment_bandeja_productos">
 
         <action
             android:id="@+id/action_BandejaProductosFragment_to_ProductoFragment"
             app:destination="@id/ProductoFragment">
+            <argument
+                android:name="producto"
+                app:argType="com.spitzer.examenmobilemeli.data.Result" />
         </action>
         <action
             android:id="@+id/action_BandejaProductosFragment_to_BuscadorFragment"
@@ -29,7 +32,9 @@
         android:name="com.spitzer.examenmobilemeli.presentation.producto.ProductoFragment"
         android:label="@string/producto_fragment_label"
         tools:layout="@layout/fragment_producto">
-
+        <argument
+            android:name="producto"
+            app:argType="com.spitzer.examenmobilemeli.data.Result" />
         <action
             android:id="@+id/action_ProductoFragment_to_BandejaProductosFragment"
             app:destination="@id/BandejaProductosFragment" />

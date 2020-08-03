@@ -6,6 +6,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import java.text.NumberFormat
+import java.util.*
 
 
 fun SearchView.showkeyboard() {
@@ -25,3 +27,7 @@ fun <T> LiveData<out Event<T>>.observeEvent(owner: LifecycleOwner, onEventUnhand
 fun LiveData<out VoidEvent>.observeEvent(owner: LifecycleOwner, onEventUnhandled: () -> Unit) {
     observe(owner, Observer { if (!it.hasBeenHandled()) onEventUnhandled() })
 }
+
+fun Double.toCash(): String = NumberFormat.getNumberInstance(Locale.ITALY).format(this)
+
+fun Double.toCashString(): String = NumberFormat.getCurrencyInstance(Locale.ITALY).format(this)

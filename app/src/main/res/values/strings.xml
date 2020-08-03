@@ -2,12 +2,22 @@
     <string name="app_name">ExamenMobileMeLi</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="producto_fragment_label">Second Fragment</string>
-    <string name="buscador_fragment_label">Buscar productos</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="bandeja_productos">MeLi ARG</string>
+    <string name="producto_fragment_label">Producto</string>
+    <string name="buscador_fragment_label">Buscar...</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="boton_comprar_ahora">Comprar ahora</string>
+    <string name="boton_agregar_carrito">Agregar al carrito</string>
+
+    <string name="prueba_titulo_articulo">Sony Bravia 55\' Full HD 4K - Smart + AndroidTV - Chromecast integrado</string>
+    <string name="prueba_precio_articulo">97.539,99</string>
+    <string name="prueba_condicion_articulo">Usado</string>
+    <string name="prueba_ubicacion_articulo">Santa Fe Santa - Fe Capital</string>
+    <string name="prueba_envio_articulo">Envío gratis</string>
+    <string name="prueba_pago_articulo">Pagá hasta en 12 cuotas de $999,99</string>
+    <string name="prueba_info_articulo">Información del producto</string>
+    <string name="prueba_vendidos_articulo">85 vendidos</string>
+    <string name="prueba_detalle_articulo">Marca: Sony\nModelo: Bravia HKXR 95 KTP</string>
+
+
 </resources>
