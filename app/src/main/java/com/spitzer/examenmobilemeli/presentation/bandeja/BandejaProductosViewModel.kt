@@ -31,7 +31,7 @@ class BandejaProductosViewModel(override val coroutineContext: CoroutineContext)
 
     private fun getProductos(query: String) = launch  {
         val result = mRepository.getProduct(query)
-        when(result) {
+        when (result) {
             is Resultado.Value -> {
                 if (result.value.isSuccessful) {
                     resultadoBusqueda = result.value.body()?: BusquedaArticulos()
@@ -45,6 +45,10 @@ class BandejaProductosViewModel(override val coroutineContext: CoroutineContext)
                 estadoRespuestaProductos.value = Event(Estado.SIN_CONEXION_INTERNET)
             }
         }
+    }
+
+    private fun getHistorial() {
+
     }
 
 }

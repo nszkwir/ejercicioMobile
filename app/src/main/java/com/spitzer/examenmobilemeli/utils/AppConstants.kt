@@ -13,4 +13,6 @@ object AppConstants {
     const val ETAG_RESPONSE_HANDLING_EVENT = "RESPONSE_HANDLING_EVENT"
     const val ETAG_SHARED_PREFERENCES = "SHARED_PREFERENCES"
 
+    const val ETAG_TEST = "ETAG_TEST"
+
 }

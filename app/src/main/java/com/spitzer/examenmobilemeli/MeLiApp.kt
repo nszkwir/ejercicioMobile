@@ -18,4 +18,5 @@ class MeLiApp: Application() {
     override fun onLowMemory() {
         super.onLowMemory()
     }
+
 }

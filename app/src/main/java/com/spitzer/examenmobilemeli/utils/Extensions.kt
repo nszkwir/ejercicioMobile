@@ -29,5 +29,3 @@ fun LiveData<out VoidEvent>.observeEvent(owner: LifecycleOwner, onEventUnhandled
 }
 
 fun Double.toCash(): String = NumberFormat.getNumberInstance(Locale.ITALY).format(this)
-
-fun Double.toCashString(): String = NumberFormat.getCurrencyInstance(Locale.ITALY).format(this)

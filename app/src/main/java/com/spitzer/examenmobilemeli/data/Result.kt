@@ -3,6 +3,7 @@ package com.spitzer.examenmobilemeli.data
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.spitzer.examenmobilemeli.utils.toCash
 
 data class Result(
     @SerializedName("accepts_mercadopago")
@@ -123,4 +124,5 @@ data class Result(
             return arrayOfNulls(size)
         }
     }
+
 }

@@ -6,6 +6,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import kotlin.reflect.KClass
 
 class ApiClient {
 
@@ -38,7 +39,7 @@ class ApiClient {
 
     }
 
-    fun getURLBase():String{
+    fun getURLBase(): String {
         return "https://api.mercadolibre.com/sites/MLA/"
     }
 

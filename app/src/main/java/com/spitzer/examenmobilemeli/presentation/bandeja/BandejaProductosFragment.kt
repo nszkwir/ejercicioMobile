@@ -112,13 +112,14 @@ class BandejaProductosFragment : Fragment() {
     }
 
     fun handleResponseBusquedaProducto(estado: Estado) {
+
         binding.clBarraCantidadResultados.visibility = if (mViewModel.resultadoBusqueda.results.isNotEmpty()) View.VISIBLE else View.GONE
         binding.tvCantidadBusqueda.text = "${mViewModel.resultadoBusqueda.results.size} resultados"
+
         (binding.rvProductos.adapter as BandejaProductosAdapter).setData(mViewModel.resultadoBusqueda.results)
         when (estado) {
             Estado.CARGANDO -> {
                 showProgressBar()
-//                Snackbar.make(this.requireView(), "CARGANDO", Snackbar.LENGTH_SHORT).show()
             }
             Estado.EXITO -> {
                 hideProgressBar()
@@ -132,7 +133,6 @@ class BandejaProductosFragment : Fragment() {
                 }
                 binding.clError.visibility = View.GONE
                 binding.clSinConexion.visibility = View.GONE
-//                Snackbar.make(this.requireView(), "EXITO", Snackbar.LENGTH_SHORT).show()
             }
             Estado.NO_AUTENTICADO -> {
                 hideProgressBar()
@@ -165,6 +165,16 @@ class BandejaProductosFragment : Fragment() {
         }
     }
 
+    fun showProgressBar() {
+        this.progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar() {
+        this.progressBar.visibility = View.GONE
+    }
+
+    // TODO: 8/3/2020 el manejo de las Preferences podría implementarse el repositorio del ViewModel inyectandole el application
+    // TODO: 8/4/2020 los historiales podrían guardar consigo la fecha de inserción para usar como parámetro de ordenamiento 
     private fun obtenerHistorialBusqueda(): HistorialBusqueda {
         val preferences = this.requireActivity().getSharedPreferences(GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE) ?: return HistorialBusqueda()
         var historialSerializado: String
@@ -177,15 +187,6 @@ class BandejaProductosFragment : Fragment() {
         }
     }
 
-    fun showProgressBar() {
-        this.progressBar.visibility = View.VISIBLE
-    }
-
-    fun hideProgressBar() {
-        this.progressBar.visibility = View.GONE
-    }
-
-    // TODO: 8/3/2020 el manejo de las Preferences podría implementarse en la clase de aplicación como funciones estáticas
     private fun actualizarHistorialBusqueda(historial: HistorialBusqueda): Boolean {
         val historialSerializado = gSON.toJson(historial)
         val preferences = this.requireActivity().getSharedPreferences(GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE) ?: return false

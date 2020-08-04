@@ -21,26 +21,15 @@ class ProductoFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_producto, container, false)
         mViewModel = ViewModelProvider(this, defaultViewModelProviderFactory).get(ProductoViewModel::class.java)
-        mViewModel.producto = args.producto
+        mViewModel.setearProducto(args.producto)
         definirBindings()
         return binding.root
     }
 
     fun definirBindings() {
 
-        binding.tvCondicionArticulo.text = when(mViewModel.producto.condition) {
-            "new" ->  "Nuevo"
-            "used" -> "Usado"
-            "refubrished" -> "Reacondicionado"
-            else -> ""
-        }
-
-        binding.tvCantidadVendidos.text = when(mViewModel.producto.soldQuantity) {
-            0 -> "ninguno vendido"
-            1 -> "1 vendido"
-            else -> "${mViewModel.producto.soldQuantity} vendidos"
-        }
-
+        binding.tvCondicionArticulo.text = mViewModel.condicion
+        binding.tvCantidadVendidos.text = mViewModel.vendidos
         binding.tvTituloArticulo.text = mViewModel.producto.title
 
         Picasso.get()
@@ -53,9 +42,9 @@ class ProductoFragment : Fragment() {
 
         binding.clEnvio.visibility = if (mViewModel.producto.shipping?.freeShipping) View.VISIBLE else View.GONE
 
-        if (mViewModel.producto.installments!= null && mViewModel.producto.installments.amount != 0.0 && mViewModel.producto.installments.quantity != 0) {
+        if (mViewModel.formaPago.isNotBlank()) {
             binding.clPago.visibility = View.VISIBLE
-            binding.tvPago.text = "Pagá hasta en ${mViewModel.producto.installments.quantity} cuotas de $${mViewModel.producto.installments.amount.toCash()}"
+            binding.tvPago.text = mViewModel.formaPago
         } else { binding.clPago.visibility = View.GONE}
 
         if (mViewModel.producto.attributes.isNullOrEmpty()) {
@@ -65,7 +54,7 @@ class ProductoFragment : Fragment() {
             binding.vDivisorHorizontalInfo.visibility = View.VISIBLE
             binding.clInformacionProducto.visibility = View.VISIBLE
 
-            binding.tvInfoKeyValue.text = mViewModel.getProductInfo()
+            binding.tvInfoKeyValue.text = mViewModel.productInfo
         }
     }
 }
