@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -46,8 +45,6 @@ class BandejaProductosFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bandeja_productos, container, false)
         progressBar = requireActivity().findViewById(R.id.clProgressBar) as ConstraintLayout
-//        mViewModel = ViewModelProvider(this, BandejaProductosViewModelFactory()).get(BandejaProductosViewModel::class.java)
-//        mViewModelBusqueda = ViewModelProviders.of(requireActivity()).get(HistorialBusquedaViewModel::class.java)
         mViewModelBusqueda.historialBusqueda = obtenerHistorialBusqueda()
 
         bandejaProductosAdapter = BandejaProductosAdapter(
@@ -117,6 +114,7 @@ class BandejaProductosFragment : Fragment() {
     fun handleResponseBusquedaProducto(estado: Estado) {
         binding.clBarraCantidadResultados.visibility = if (mViewModel.resultadoBusqueda.results.isNotEmpty()) View.VISIBLE else View.GONE
         binding.tvCantidadBusqueda.text = "${mViewModel.resultadoBusqueda.results.size} resultados"
+        (binding.rvProductos.adapter as BandejaProductosAdapter).setData(mViewModel.resultadoBusqueda.results)
         when (estado) {
             Estado.CARGANDO -> {
                 showProgressBar()
@@ -124,30 +122,40 @@ class BandejaProductosFragment : Fragment() {
             }
             Estado.EXITO -> {
                 hideProgressBar()
-//                binding.clResultadoBusqueda.visibility = View.VISIBLE
-//                binding.clError.visibility = View.GONE
-//                binding.clSinConexion.visibility = View.GONE
+                if (mViewModel.resultadoBusqueda.results.isNullOrEmpty()) {
+                    binding.tvCantidadBusqueda.text = "SIN RESULTADOS"
+                    binding.clSinResultados.visibility = View.VISIBLE
+                    binding.clResultadoBusqueda.visibility = View.GONE
+                } else {
+                    binding.clSinResultados.visibility = View.GONE
+                    binding.clResultadoBusqueda.visibility = View.VISIBLE
+                }
+                binding.clError.visibility = View.GONE
+                binding.clSinConexion.visibility = View.GONE
 //                Snackbar.make(this.requireView(), "EXITO", Snackbar.LENGTH_SHORT).show()
             }
             Estado.NO_AUTENTICADO -> {
                 hideProgressBar()
-//                binding.clResultadoBusqueda.visibility = View.GONE
-//                binding.clError.visibility = View.GONE
-//                binding.clSinConexion.visibility = View.GONE
+                binding.clResultadoBusqueda.visibility = View.GONE
+                binding.clError.visibility = View.GONE
+                binding.clSinConexion.visibility = View.GONE
+                binding.clSinResultados.visibility = View.GONE
                 Snackbar.make(this.requireView(), "NO AUTENTICADO", Snackbar.LENGTH_SHORT).show()
             }
             Estado.ERROR -> {
                 hideProgressBar()
-//                binding.clResultadoBusqueda.visibility = View.GONE
-//                binding.clError.visibility = View.VISIBLE
-//                binding.clSinConexion.visibility = View.GONE
+                binding.clResultadoBusqueda.visibility = View.GONE
+                binding.clError.visibility = View.VISIBLE
+                binding.clSinConexion.visibility = View.GONE
+                binding.clSinResultados.visibility = View.GONE
                 Snackbar.make(this.requireView(), "ERROR", Snackbar.LENGTH_LONG).show()
             }
             Estado.SIN_CONEXION_INTERNET -> {
                 hideProgressBar()
-//                binding.clResultadoBusqueda.visibility = View.GONE
-//                binding.clError.visibility = View.GONE
-//                binding.clSinConexion.visibility = View.GONE
+                binding.clResultadoBusqueda.visibility = View.GONE
+                binding.clError.visibility = View.GONE
+                binding.clSinConexion.visibility = View.VISIBLE
+                binding.clSinResultados.visibility = View.GONE
                 Snackbar.make(this.requireView(), "SIN CONEXION", Snackbar.LENGTH_LONG).show()
             }
             else -> {
@@ -155,8 +163,6 @@ class BandejaProductosFragment : Fragment() {
                 Log.e(AppConstants.ETAG_RESPONSE_HANDLING_EVENT, "Estado no manejado")
             }
         }
-        (binding.rvProductos.adapter as BandejaProductosAdapter).setData(mViewModel.resultadoBusqueda.results)
-
     }
 
     private fun obtenerHistorialBusqueda(): HistorialBusqueda {

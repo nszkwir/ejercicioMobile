@@ -157,6 +157,31 @@
                 android:textSize="18sp"
                 app:layout_constraintTop_toBottomOf="@+id/icSinConexion"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+<!--SIN RESULTADOS-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSinResultados"
+            android:padding="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/icNoData"
+                android:src="@drawable/ic_report_problem_96"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No encontramos resultados ..."
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@+id/icNoData"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </LinearLayout>
 </layout>
