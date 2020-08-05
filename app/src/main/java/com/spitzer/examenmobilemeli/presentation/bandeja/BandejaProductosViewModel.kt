@@ -47,8 +47,4 @@ class BandejaProductosViewModel(override val coroutineContext: CoroutineContext)
         }
     }
 
-    private fun getHistorial() {
-
-    }
-
 }
