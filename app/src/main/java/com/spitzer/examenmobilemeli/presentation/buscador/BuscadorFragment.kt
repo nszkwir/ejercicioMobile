@@ -20,13 +20,17 @@ import com.spitzer.examenmobilemeli.presentation.bandeja.HistorialBusquedaViewMo
 import com.spitzer.examenmobilemeli.utils.hideKeyboard
 import com.spitzer.examenmobilemeli.utils.showkeyboard
 
-class BuscadorFragment: Fragment() {
+class BuscadorFragment : Fragment() {
     val args: BuscadorFragmentArgs by navArgs()
     private lateinit var binding: FragmentBuscadorBinding
     private lateinit var mViewModelBusqueda: HistorialBusquedaViewModel
     private lateinit var adapter: HistorialBusquedaAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_buscador, container, false)
         return binding.root
     }
@@ -34,7 +38,8 @@ class BuscadorFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val historial = args.historialBusqueda
-        mViewModelBusqueda = ViewModelProviders.of(requireActivity()).get(HistorialBusquedaViewModel::class.java)
+        mViewModelBusqueda =
+            ViewModelProviders.of(requireActivity()).get(HistorialBusquedaViewModel::class.java)
         initView()
     }
 
@@ -42,15 +47,16 @@ class BuscadorFragment: Fragment() {
 
         adapter = HistorialBusquedaAdapter(
             mViewModelBusqueda.historialBusqueda,
-            object: IClickListener {
+            object : IClickListener {
                 override fun onClick(v: View, index: Int) {
                     binding.svFiltro.hideKeyboard()
-                    setearStringBusqueda(adapter!!.items!![index])
+                    setearStringBusqueda(adapter.items[index])
                 }
             }
         )
 
-        val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager =
+            requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         binding.svFiltro.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
         binding.svFiltro.queryHint = "Buscar producto ..."
         binding.svFiltro.setIconifiedByDefault(false)

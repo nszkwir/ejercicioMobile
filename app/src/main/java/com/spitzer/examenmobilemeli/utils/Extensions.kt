@@ -29,3 +29,6 @@ fun LiveData<out VoidEvent>.observeEvent(owner: LifecycleOwner, onEventUnhandled
 }
 
 fun Double.toCash(): String = NumberFormat.getNumberInstance(Locale.ITALY).format(this)
+
+val String.Companion.emptyString: String
+    get() = ""

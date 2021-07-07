@@ -23,7 +23,6 @@ import com.spitzer.examenmobilemeli.models.HistorialBusqueda
 import com.spitzer.examenmobilemeli.utils.AppConstants
 import com.spitzer.examenmobilemeli.utils.AppConstants.GLOBAL_SHARED_PREFERENCES
 import com.spitzer.network.Estado
-import java.lang.Exception
 
 
 class BandejaProductosFragment : Fragment() {
@@ -37,23 +36,32 @@ class BandejaProductosFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewModel = ViewModelProvider(this, BandejaProductosViewModelFactory()).get(BandejaProductosViewModel::class.java)
-        mViewModelBusqueda = ViewModelProviders.of(requireActivity()).get(HistorialBusquedaViewModel::class.java)
+        mViewModel = ViewModelProvider(this, BandejaProductosViewModelFactory()).get(
+            BandejaProductosViewModel::class.java
+        )
+        mViewModelBusqueda =
+            ViewModelProviders.of(requireActivity()).get(HistorialBusquedaViewModel::class.java)
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bandeja_productos, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_bandeja_productos, container, false)
         progressBar = requireActivity().findViewById(R.id.clProgressBar) as ConstraintLayout
         mViewModelBusqueda.historialBusqueda = obtenerHistorialBusqueda()
 
         bandejaProductosAdapter = BandejaProductosAdapter(
             mViewModel.resultadoBusqueda,
-            object: IClickListener {
+            object : IClickListener {
                 override fun onClick(v: View, index: Int) {
-                    val action = BandejaProductosFragmentDirections.
-                    actionBandejaProductosFragmentToProductoFragment(
-                        (binding.rvProductos.adapter!! as BandejaProductosAdapter).getItem(index))
+                    val action =
+                        BandejaProductosFragmentDirections.actionBandejaProductosFragmentToProductoFragment(
+                            (binding.rvProductos.adapter!! as BandejaProductosAdapter).getItem(index)
+                        )
                     findNavController().navigate(action)
                 }
             })
@@ -67,20 +75,23 @@ class BandejaProductosFragment : Fragment() {
 
         if (binding.rvProductos.adapter == null) {
             binding.rvProductos.apply {
-                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 adapter = bandejaProductosAdapter
             }
         }
 
         binding.clBuscador.setOnClickListener {
-            val action = BandejaProductosFragmentDirections.
-            actionBandejaProductosFragmentToBuscadorFragment(
-                mViewModelBusqueda.historialBusqueda)
+            val action =
+                BandejaProductosFragmentDirections.actionBandejaProductosFragmentToBuscadorFragment(
+                    mViewModelBusqueda.historialBusqueda
+                )
             findNavController().navigate(action)
         }
 
         binding.etSearch.text = mViewModel.textoBusqueda
-        binding.clBarraCantidadResultados.visibility = if (mViewModel.resultadoBusqueda.results.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.clBarraCantidadResultados.visibility =
+            if (mViewModel.resultadoBusqueda.results.isNotEmpty()) View.VISIBLE else View.GONE
         binding.tvCantidadBusqueda.text = "${mViewModel.resultadoBusqueda.results.size} resultados"
     }
 
@@ -105,15 +116,16 @@ class BandejaProductosFragment : Fragment() {
 
         mViewModel.respuestaProductos.observe(
             viewLifecycleOwner, Observer {
-                   it.getContentIfNotHandled()?.let { estado ->
-                       handleResponseBusquedaProducto(estado)
-                   }
+                it.getContentIfNotHandled()?.let { estado ->
+                    handleResponseBusquedaProducto(estado)
+                }
             })
     }
 
     fun handleResponseBusquedaProducto(estado: Estado) {
 
-        binding.clBarraCantidadResultados.visibility = if (mViewModel.resultadoBusqueda.results.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.clBarraCantidadResultados.visibility =
+            if (mViewModel.resultadoBusqueda.results.isNotEmpty()) View.VISIBLE else View.GONE
         binding.tvCantidadBusqueda.text = "${mViewModel.resultadoBusqueda.results.size} resultados"
 
         (binding.rvProductos.adapter as BandejaProductosAdapter).setData(mViewModel.resultadoBusqueda.results)
@@ -159,7 +171,7 @@ class BandejaProductosFragment : Fragment() {
                 Snackbar.make(this.requireView(), "SIN CONEXION", Snackbar.LENGTH_LONG).show()
             }
             else -> {
-              Snackbar.make(this.requireView(), "ESTADO NO MANEJADO", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(this.requireView(), "ESTADO NO MANEJADO", Snackbar.LENGTH_LONG).show()
                 Log.e(AppConstants.ETAG_RESPONSE_HANDLING_EVENT, "Estado no manejado")
             }
         }
@@ -176,20 +188,28 @@ class BandejaProductosFragment : Fragment() {
     // TODO: 8/3/2020 el manejo de las Preferences podría implementarse el repositorio del ViewModel inyectandole el application
     // TODO: 8/4/2020 los historiales podrían guardar consigo la fecha de inserción para usar como parámetro de ordenamiento 
     private fun obtenerHistorialBusqueda(): HistorialBusqueda {
-        val preferences = this.requireActivity().getSharedPreferences(GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE) ?: return HistorialBusqueda()
+        val preferences = this.requireActivity()
+            .getSharedPreferences(GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+            ?: return HistorialBusqueda()
         var historialSerializado: String
         return try {
-            historialSerializado = preferences.getString(AppConstants.HISTORIAL_BUSQUEDA_KEY, "")?: ""
+            historialSerializado =
+                preferences.getString(AppConstants.HISTORIAL_BUSQUEDA_KEY, "") ?: ""
             gSON.fromJson(historialSerializado, HistorialBusqueda::class.java)
         } catch (e: Exception) {
-            Log.e(AppConstants.ETAG_SHARED_PREFERENCES, e.localizedMessage?:"Excepcion al obtener el historial de búsqueda en Shared Preferences Globales.")
+            Log.e(
+                AppConstants.ETAG_SHARED_PREFERENCES,
+                e.localizedMessage
+                    ?: "Excepcion al obtener el historial de búsqueda en Shared Preferences Globales."
+            )
             HistorialBusqueda()
         }
     }
 
     private fun actualizarHistorialBusqueda(historial: HistorialBusqueda): Boolean {
         val historialSerializado = gSON.toJson(historial)
-        val preferences = this.requireActivity().getSharedPreferences(GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE) ?: return false
+        val preferences = this.requireActivity()
+            .getSharedPreferences(GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE) ?: return false
         return try {
             with(preferences.edit()) {
                 putString(AppConstants.HISTORIAL_BUSQUEDA_KEY, historialSerializado)
@@ -197,9 +217,12 @@ class BandejaProductosFragment : Fragment() {
             }
             true
         } catch (e: Exception) {
-            Log.e(AppConstants.ETAG_SHARED_PREFERENCES, e.localizedMessage?:"Excepcion al actualizar el historial de búsqueda en Shared Preferences Globales.")
+            Log.e(
+                AppConstants.ETAG_SHARED_PREFERENCES,
+                e.localizedMessage
+                    ?: "Excepcion al actualizar el historial de búsqueda en Shared Preferences Globales."
+            )
             false
         }
     }
-
 }

@@ -9,14 +9,16 @@ import com.spitzer.examenmobilemeli.interfaces.IClickListener
 import com.spitzer.examenmobilemeli.models.HistorialBusqueda
 import kotlinx.android.synthetic.main.item_historial_busqueda.view.*
 
-class HistorialBusquedaAdapter(historial: HistorialBusqueda, var listener: IClickListener) : RecyclerView.Adapter<HistorialBusquedaAdapter.ViewHolder>(){
+class HistorialBusquedaAdapter(historial: HistorialBusqueda, var listener: IClickListener) :
+    RecyclerView.Adapter<HistorialBusquedaAdapter.ViewHolder>() {
 
-    var items: ArrayList<String> = historial?.busqueda_string?: arrayListOf()
+    var items: ArrayList<String> = historial.busqueda_string
     var copiaItems: ArrayList<String> = ArrayList<String>(items)
     var viewHolder: ViewHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val vista = LayoutInflater.from(parent.context).inflate(R.layout.item_historial_busqueda, parent, false)
+        val vista = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_historial_busqueda, parent, false)
         viewHolder =
             ViewHolder(
                 vista,
@@ -38,16 +40,17 @@ class HistorialBusquedaAdapter(historial: HistorialBusqueda, var listener: IClic
     fun filtrar(busqueda: String) {
         items.clear()
 
-        if(busqueda.isEmpty()) {
+        if (busqueda.isEmpty()) {
             items.addAll(copiaItems)
         } else {
             val itemsOriginales = copiaItems
-            items.addAll(itemsOriginales.filter{it.contains(busqueda)})
+            items.addAll(itemsOriginales.filter { it.contains(busqueda) })
         }
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View, listener: IClickListener): RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    class ViewHolder(itemView: View, listener: IClickListener) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         var vista = itemView
         var listener: IClickListener? = null
 

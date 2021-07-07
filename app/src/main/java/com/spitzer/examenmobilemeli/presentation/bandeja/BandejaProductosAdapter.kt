@@ -13,8 +13,8 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_articulo_bandeja.view.*
 
 
-class BandejaProductosAdapter(resultadoBusqueda: BusquedaArticulos, var listener: IClickListener)
-    : RecyclerView.Adapter<BandejaProductosAdapter.ViewHolder>() {
+class BandejaProductosAdapter(resultadoBusqueda: BusquedaArticulos, var listener: IClickListener) :
+    RecyclerView.Adapter<BandejaProductosAdapter.ViewHolder>() {
 
     private var listaArticulos = resultadoBusqueda.results
 
@@ -23,7 +23,8 @@ class BandejaProductosAdapter(resultadoBusqueda: BusquedaArticulos, var listener
             .inflate(R.layout.item_articulo_bandeja, parent, false)
         return ViewHolder(
             vista,
-            listener)
+            listener
+        )
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +33,7 @@ class BandejaProductosAdapter(resultadoBusqueda: BusquedaArticulos, var listener
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val articulo = listaArticulos[position]
-        val condicion = when(articulo.condition) {
+        val condicion = when (articulo.condition) {
             "new" -> "Nuevo"
             "used" -> "Usado"
             "refubrished" -> "Reacondicionado"
@@ -48,8 +49,10 @@ class BandejaProductosAdapter(resultadoBusqueda: BusquedaArticulos, var listener
         holder.itemView.tvDescripcionArticulo.text = articulo.title
         holder.itemView.tvPrecio.text = articulo.price.toCash()
         holder.itemView.tvCondicion.text = condicion
-        holder.itemView.tvUbicacion.text = "${articulo.sellerAddress.state.name} - ${articulo.sellerAddress.city.name}"
-        holder.itemView.tvEnvio.visibility = if (articulo.shipping.freeShipping) View.VISIBLE else View.GONE
+        holder.itemView.tvUbicacion.text =
+            "${articulo.sellerAddress.state.name} - ${articulo.sellerAddress.city.name}"
+        holder.itemView.tvEnvio.visibility =
+            if (articulo.shipping.freeShipping) View.VISIBLE else View.GONE
 
     }
 
@@ -71,7 +74,8 @@ class BandejaProductosAdapter(resultadoBusqueda: BusquedaArticulos, var listener
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View, listener: IClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    class ViewHolder(itemView: View, listener: IClickListener) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         var vista = itemView
         var listener: IClickListener? = null
 
