@@ -4,8 +4,7 @@ buildscript {
     ext.kotlin_version = '1.5.20'
     repositories {
         google()
-        jcenter()
-    }
+        mavenCentral()    }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -18,8 +17,9 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
+    version = examenMobileVersionCode
 }
 
 task clean(type: Delete) {
