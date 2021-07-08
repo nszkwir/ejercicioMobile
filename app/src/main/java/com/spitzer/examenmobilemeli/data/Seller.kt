@@ -1,8 +1,10 @@
 package com.spitzer.examenmobilemeli.data
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class Seller(
     @SerializedName("car_dealer")
     var carDealer: Boolean = false,
@@ -13,5 +15,5 @@ data class Seller(
     @SerializedName("real_estate_agency")
     var realEstateAgency: Boolean = false,
     @SerializedName("tags")
-    var tags: List<Any> = listOf()
-)
+    var tags: List<String>? = null
+) : Parcelable

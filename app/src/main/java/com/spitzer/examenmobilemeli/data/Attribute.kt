@@ -1,8 +1,10 @@
 package com.spitzer.examenmobilemeli.data
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class Attribute(
     @SerializedName("attribute_group_id")
     var attributeGroupId: String = "",
@@ -19,5 +21,5 @@ data class Attribute(
     @SerializedName("value_name")
     var valueName: String = "",
     @SerializedName("value_struct")
-    var valueStruct: Any? = null
-)
+    var valueStruct: ValueStruct? = null
+) : Parcelable

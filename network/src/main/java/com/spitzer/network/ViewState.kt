@@ -1,6 +1,6 @@
 package com.spitzer.network
 
-enum class Estado {
+enum class ViewState {
     EXITO,
     ERROR,
     CARGANDO,

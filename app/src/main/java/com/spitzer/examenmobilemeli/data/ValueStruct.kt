@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class City(
-    @SerializedName("id")
-    var id: String? = null,
-    @SerializedName("name")
-    var name: String = ""
+class ValueStruct (
+    @SerializedName("number")
+    var number: Double? = 0.0,
+    @SerializedName("unit")
+    var unit: String? = ""
 ) : Parcelable

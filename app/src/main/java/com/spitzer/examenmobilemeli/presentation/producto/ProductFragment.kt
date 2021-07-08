@@ -1,32 +1,44 @@
 package com.spitzer.examenmobilemeli.presentation.producto
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.spitzer.examenmobilemeli.R
-import com.spitzer.examenmobilemeli.databinding.FragmentProductoBinding
+import com.spitzer.examenmobilemeli.databinding.FragmentProductBinding
 import com.spitzer.examenmobilemeli.utils.toCash
 import com.squareup.picasso.Picasso
 
-class ProductoFragment : Fragment() {
-    val args: ProductoFragmentArgs by navArgs()
-    private lateinit var binding: FragmentProductoBinding
-    private lateinit var mViewModel: ProductoViewModel
+class ProductFragment : Fragment() {
+    private val args: ProductFragmentArgs by navArgs()
+    private var _binding: FragmentProductBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var mViewModel: ProductViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_producto, container, false)
-        mViewModel = ViewModelProvider(this, defaultViewModelProviderFactory).get(ProductoViewModel::class.java)
-        mViewModel.setearProducto(args.producto)
-        definirBindings()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentProductBinding.inflate(inflater, container, false)
+        mViewModel = ViewModelProvider(
+            this,
+            defaultViewModelProviderFactory
+        ).get(ProductViewModel::class.java)
+        mViewModel.setearProducto(args.product)
+        defineBindings()
         return binding.root
     }
 
-    fun definirBindings() {
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun defineBindings() {
 
         binding.tvCondicionArticulo.text = mViewModel.condicion
         binding.tvCantidadVendidos.text = mViewModel.vendidos
@@ -40,12 +52,15 @@ class ProductoFragment : Fragment() {
 
         binding.tvPrecioArticulo.text = mViewModel.producto.price.toCash()
 
-        binding.clEnvio.visibility = if (mViewModel.producto.shipping?.freeShipping) View.VISIBLE else View.GONE
+        binding.clEnvio.visibility =
+            if (mViewModel.producto.shipping.freeShipping) View.VISIBLE else View.GONE
 
         if (mViewModel.formaPago.isNotBlank()) {
             binding.clPago.visibility = View.VISIBLE
             binding.tvPago.text = mViewModel.formaPago
-        } else { binding.clPago.visibility = View.GONE}
+        } else {
+            binding.clPago.visibility = View.GONE
+        }
 
         if (mViewModel.producto.attributes.isNullOrEmpty()) {
             binding.vDivisorHorizontalInfo.visibility = View.GONE

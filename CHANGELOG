@@ -1,0 +1,19 @@
+# Changelog
+
+## Version 1.1.0
+- Upgraded several dependencies
+- Cleaned the code
+- Implemented parcelize to data classes
+- Improved adapters implementations
+- Changed synthetic for jetpack view binding
+- Added log interceptor for OkHttp client
+- Modified data classes to fix problem that parcelize implementation brought
+- Modified ViewModels to get dependencies at constructor
+- Modified ViewModels factories
+- Moved shared preference logic to adequate repository
+- Updated search fragment and its adapter
+- Moved business logic to ViewModels
+
+## Version 1.0.0
+- Initial version
+- ProductDashboard, ProductSearch and ProductView main features
