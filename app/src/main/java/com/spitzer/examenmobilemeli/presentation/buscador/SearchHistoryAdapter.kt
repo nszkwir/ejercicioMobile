@@ -6,22 +6,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.spitzer.examenmobilemeli.R
 import com.spitzer.examenmobilemeli.interfaces.IClickListener
-import com.spitzer.examenmobilemeli.models.HistorialBusqueda
-import kotlinx.android.synthetic.main.item_historial_busqueda.view.*
+import com.spitzer.examenmobilemeli.models.SearchHistory
 
-class HistorialBusquedaAdapter(historial: HistorialBusqueda, var listener: IClickListener) :
-    RecyclerView.Adapter<HistorialBusquedaAdapter.ViewHolder>() {
+class SearchHistoryAdapter(searchHistory: SearchHistory, var listener: IClickListener) :
+    RecyclerView.Adapter<SearchHistoryAdapter.ViewHolder>() {
 
-    var items: ArrayList<String> = historial.busqueda_string
-    var copiaItems: ArrayList<String> = ArrayList<String>(items)
+    var items: ArrayList<String> = searchHistory.busqueda_string
+    var itemsCopy: ArrayList<String> = ArrayList(items)
     var viewHolder: ViewHolder? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val vista = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_historial_busqueda, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_search_history, parent, false)
         viewHolder =
             ViewHolder(
-                vista,
+                view,
                 listener
             )
         return viewHolder!!
@@ -37,26 +36,24 @@ class HistorialBusquedaAdapter(historial: HistorialBusqueda, var listener: IClic
         holder.bind(item)
     }
 
-    fun filtrar(busqueda: String) {
+    fun filter(searchString: String) {
         items.clear()
-
-        if (busqueda.isEmpty()) {
-            items.addAll(copiaItems)
+        if (searchString.isEmpty()) {
+            items.addAll(itemsCopy)
         } else {
-            val itemsOriginales = copiaItems
-            items.addAll(itemsOriginales.filter { it.contains(busqueda) })
+            items.addAll(itemsCopy.filter { it.contains(searchString) })
         }
         notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View, listener: IClickListener) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
-        var vista = itemView
+        var view = itemView
         var listener: IClickListener? = null
 
         init {
             this.listener = listener
-            vista.setOnClickListener(this)
+            view.setOnClickListener(this)
         }
 
         fun bind(item: String) {

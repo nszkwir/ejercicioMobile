@@ -3,54 +3,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/BandejaProductosFragment">
+    app:startDestination="@id/ProductDashboardFragment">
 
     <fragment
-        android:id="@+id/BandejaProductosFragment"
-        android:name="com.spitzer.examenmobilemeli.presentation.bandeja.BandejaProductosFragment"
+        android:id="@+id/ProductDashboardFragment"
+        android:name="com.spitzer.examenmobilemeli.presentation.bandeja.ProductDashboardFragment"
         android:label="@string/bandeja_productos"
-        tools:layout="@layout/fragment_bandeja_productos">
+        tools:layout="@layout/fragment_dashboard_products">
 
         <action
-            android:id="@+id/action_BandejaProductosFragment_to_ProductoFragment"
-            app:destination="@id/ProductoFragment">
+            android:id="@+id/action_ProductDashboardFragment_to_ProductFragment"
+            app:destination="@id/ProductFragment">
             <argument
-                android:name="producto"
-                app:argType="com.spitzer.examenmobilemeli.data.Result" />
+                android:name="product"
+                app:argType="com.spitzer.examenmobilemeli.data.Product" />
         </action>
         <action
-            android:id="@+id/action_BandejaProductosFragment_to_BuscadorFragment"
-            app:destination="@id/BuscadorFragment"
-            app:popUpTo="@id/BandejaProductosFragment">
+            android:id="@+id/action_ProductDashboardFragment_to_SearchFragment"
+            app:destination="@id/SearchFragment"
+            app:popUpTo="@id/ProductDashboardFragment">
             <argument
-                android:name="historialBusqueda"
-                app:argType="com.spitzer.examenmobilemeli.models.HistorialBusqueda" />
+                android:name="searchHistory"
+                app:argType="com.spitzer.examenmobilemeli.models.SearchHistory" />
         </action>
     </fragment>
     <fragment
-        android:id="@+id/ProductoFragment"
-        android:name="com.spitzer.examenmobilemeli.presentation.producto.ProductoFragment"
+        android:id="@+id/ProductFragment"
+        android:name="com.spitzer.examenmobilemeli.presentation.producto.ProductFragment"
         android:label="@string/producto_fragment_label"
-        tools:layout="@layout/fragment_producto">
+        tools:layout="@layout/fragment_product">
         <argument
-            android:name="producto"
-            app:argType="com.spitzer.examenmobilemeli.data.Result" />
+            android:name="product"
+            app:argType="com.spitzer.examenmobilemeli.data.Product" />
         <action
-            android:id="@+id/action_ProductoFragment_to_BandejaProductosFragment"
-            app:destination="@id/BandejaProductosFragment" />
+            android:id="@+id/action_ProductFragment_to_ProductDashboardFragment"
+            app:destination="@id/ProductDashboardFragment" />
     </fragment>
     <fragment
-        android:id="@+id/BuscadorFragment"
-        android:name="com.spitzer.examenmobilemeli.presentation.buscador.BuscadorFragment"
+        android:id="@+id/SearchFragment"
+        android:name="com.spitzer.examenmobilemeli.presentation.buscador.SearchFragment"
         android:label="@string/buscador_fragment_label"
-        tools:layout="@layout/fragment_buscador">
+        tools:layout="@layout/fragment_search">
 
         <action
-            android:id="@+id/action_BuscadorFragment_to_BandejaProductosFragment"
-            app:destination="@id/BandejaProductosFragment" />
+            android:id="@+id/action_SearchFragment_to_ProductDashboardFragment"
+            app:destination="@id/ProductDashboardFragment" />
         <argument
-            android:name="historialBusqueda"
-            app:argType="com.spitzer.examenmobilemeli.models.HistorialBusqueda" />
+            android:name="searchHistory"
+            app:argType="com.spitzer.examenmobilemeli.models.SearchHistory" />
 
     </fragment>
 

@@ -1,8 +1,10 @@
 package com.spitzer.examenmobilemeli.data
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class SellerAddress(
     @SerializedName("address_line")
     var addressLine: String = "",
@@ -22,4 +24,4 @@ data class SellerAddress(
     var state: State = State(),
     @SerializedName("zip_code")
     var zipCode: String = ""
-)
+) : Parcelable

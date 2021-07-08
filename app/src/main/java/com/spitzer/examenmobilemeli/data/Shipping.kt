@@ -1,8 +1,10 @@
 package com.spitzer.examenmobilemeli.data
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class Shipping(
     @SerializedName("free_shipping")
     var freeShipping: Boolean = false,
@@ -14,4 +16,4 @@ data class Shipping(
     var storePickUp: Boolean = false,
     @SerializedName("tags")
     var tags: List<String> = listOf()
-)
+) : Parcelable

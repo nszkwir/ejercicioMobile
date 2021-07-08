@@ -1,18 +1,18 @@
 package com.spitzer.examenmobilemeli.presentation.producto
 
 import androidx.lifecycle.ViewModel
-import com.spitzer.examenmobilemeli.data.Result
+import com.spitzer.examenmobilemeli.data.Product
 import com.spitzer.examenmobilemeli.utils.emptyString
 import com.spitzer.examenmobilemeli.utils.toCash
 
-class ProductoViewModel : ViewModel() {
-    lateinit var producto: Result
+class ProductViewModel : ViewModel() {
+    lateinit var producto: Product
     var condicion: String = ""
     var vendidos: String = ""
     var formaPago: String = ""
     var productInfo: String = ""
 
-    fun setearProducto(prod: Result) {
+    fun setearProducto(prod: Product) {
         this.producto = prod
         condicion = when (this.producto.condition) {
             "new" -> "Nuevo"

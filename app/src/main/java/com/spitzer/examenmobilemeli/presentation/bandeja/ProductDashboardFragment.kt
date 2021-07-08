@@ -7,135 +7,130 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.GsonBuilder
 import com.spitzer.examenmobilemeli.R
-import com.spitzer.examenmobilemeli.databinding.FragmentBandejaProductosBinding
-import com.spitzer.examenmobilemeli.interfaces.IClickListener
-import com.spitzer.examenmobilemeli.models.HistorialBusqueda
+import com.spitzer.examenmobilemeli.data.Product
+import com.spitzer.examenmobilemeli.databinding.FragmentDashboardProductsBinding
+import com.spitzer.examenmobilemeli.models.SearchHistory
 import com.spitzer.examenmobilemeli.utils.AppConstants
 import com.spitzer.examenmobilemeli.utils.AppConstants.GLOBAL_SHARED_PREFERENCES
+import com.spitzer.examenmobilemeli.utils.observeEvent
 import com.spitzer.network.Estado
 
+class ProductDashboardFragment : Fragment() {
 
-class BandejaProductosFragment : Fragment() {
+    private var _binding: FragmentDashboardProductsBinding? = null
+    private val binding get() = _binding!!
 
     private val gSON = GsonBuilder().create()
-    private lateinit var mViewModel: BandejaProductosViewModel
-    private lateinit var mViewModelBusqueda: HistorialBusquedaViewModel
-    private lateinit var binding: FragmentBandejaProductosBinding
-    private lateinit var bandejaProductosAdapter: BandejaProductosAdapter
+    private lateinit var productDashboardViewModel: ProductDashboardViewModel
+    private lateinit var searchHistoryViewModel: SearchHistoryViewModel
+    private lateinit var productDashboardAdapter: ProductDashboardAdapter
     private lateinit var progressBar: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewModel = ViewModelProvider(this, BandejaProductosViewModelFactory()).get(
-            BandejaProductosViewModel::class.java
+        productDashboardViewModel = ViewModelProvider(this, ProductDashboardViewModelFactory()).get(
+            ProductDashboardViewModel::class.java
         )
-        mViewModelBusqueda =
-            ViewModelProviders.of(requireActivity()).get(HistorialBusquedaViewModel::class.java)
+        searchHistoryViewModel =
+            ViewModelProvider(requireActivity()).get(SearchHistoryViewModel::class.java)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_bandeja_productos, container, false)
+    ): View {
+        _binding = FragmentDashboardProductsBinding.inflate(inflater, container, false)
         progressBar = requireActivity().findViewById(R.id.clProgressBar) as ConstraintLayout
-        mViewModelBusqueda.historialBusqueda = obtenerHistorialBusqueda()
-
-        bandejaProductosAdapter = BandejaProductosAdapter(
-            mViewModel.resultadoBusqueda,
-            object : IClickListener {
-                override fun onClick(v: View, index: Int) {
-                    val action =
-                        BandejaProductosFragmentDirections.actionBandejaProductosFragmentToProductoFragment(
-                            (binding.rvProductos.adapter!! as BandejaProductosAdapter).getItem(index)
-                        )
-                    findNavController().navigate(action)
-                }
-            })
-
-        definirObservables()
-        definirBindings()
+        searchHistoryViewModel.searchHistory = getSearchHistory()
+        productDashboardAdapter = ProductDashboardAdapter(productDashboardViewModel.searchResults)
+        productDashboardAdapter.onItemClickFunction { product -> navigateToProductFragment(product) }
+        defineObservables()
+        defineBindings()
         return binding.root
     }
 
-    fun definirBindings() {
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun navigateToProductFragment(product: Product) {
+        val action =
+            ProductDashboardFragmentDirections
+                .actionProductDashboardFragmentToProductFragment(product)
+        findNavController().navigate(action)
+    }
+
+    private fun defineBindings() {
 
         if (binding.rvProductos.adapter == null) {
             binding.rvProductos.apply {
                 layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter = bandejaProductosAdapter
+                adapter = productDashboardAdapter
             }
         }
 
         binding.clBuscador.setOnClickListener {
             val action =
-                BandejaProductosFragmentDirections.actionBandejaProductosFragmentToBuscadorFragment(
-                    mViewModelBusqueda.historialBusqueda
+                ProductDashboardFragmentDirections.actionProductDashboardFragmentToSearchFragment(
+                    searchHistoryViewModel.searchHistory
                 )
             findNavController().navigate(action)
         }
 
-        binding.etSearch.text = mViewModel.textoBusqueda
+        binding.etSearch.text = productDashboardViewModel.searchText
         binding.clBarraCantidadResultados.visibility =
-            if (mViewModel.resultadoBusqueda.results.isNotEmpty()) View.VISIBLE else View.GONE
-        binding.tvCantidadBusqueda.text = "${mViewModel.resultadoBusqueda.results.size} resultados"
+            if (productDashboardViewModel.searchResults.results.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.tvCantidadBusqueda.text =
+            "${productDashboardViewModel.searchResults.results.size} resultados"
     }
 
-    fun definirObservables() {
+    private fun defineObservables() {
 
-        mViewModelBusqueda.busqueda.observe(
-            viewLifecycleOwner,
-            Observer {
-                it.getContentIfNotHandled()?.let { textoBusqueda ->
-                    binding.etSearch.text = textoBusqueda
-                    if (textoBusqueda.isNotBlank()) {
-                        if (mViewModelBusqueda.historialBusqueda.busqueda_string.filter { it == textoBusqueda }
-                                .isEmpty()) {
-                            mViewModelBusqueda.historialBusqueda.busqueda_string.add(textoBusqueda)
-                            actualizarHistorialBusqueda(mViewModelBusqueda.historialBusqueda)
-                        }
-                        binding.clBarraCantidadResultados.visibility = View.GONE
-                        mViewModel.buscarProductos(textoBusqueda)
-                    }
+        searchHistoryViewModel.search.observeEvent(viewLifecycleOwner) { searchText ->
+            binding.etSearch.text = searchText
+            if (searchText.isNotBlank()) {
+                if (searchHistoryViewModel.searchHistory.busqueda_string.none { historyString -> historyString == searchText }) {
+                    searchHistoryViewModel.searchHistory.busqueda_string.add(searchText)
+                    updateSearchHistory(searchHistoryViewModel.searchHistory)
                 }
-            })
+                binding.clBarraCantidadResultados.visibility = View.GONE
+                productDashboardViewModel.searchProducts(searchText)
+            }
+        }
 
-        mViewModel.respuestaProductos.observe(
-            viewLifecycleOwner, Observer {
-                it.getContentIfNotHandled()?.let { estado ->
-                    handleResponseBusquedaProducto(estado)
-                }
-            })
+        productDashboardViewModel.searchResponse.observeEvent(viewLifecycleOwner) { state ->
+            handleResponseProductSearch(state)
+        }
+
     }
 
-    fun handleResponseBusquedaProducto(estado: Estado) {
+    fun handleResponseProductSearch(estado: Estado) {
 
         binding.clBarraCantidadResultados.visibility =
-            if (mViewModel.resultadoBusqueda.results.isNotEmpty()) View.VISIBLE else View.GONE
-        binding.tvCantidadBusqueda.text = "${mViewModel.resultadoBusqueda.results.size} resultados"
+            if (productDashboardViewModel.searchResults.results.isNotEmpty()) View.VISIBLE else View.GONE
+        binding.tvCantidadBusqueda.text =
+            "${productDashboardViewModel.searchResults.results.size} resultados"
 
-        (binding.rvProductos.adapter as BandejaProductosAdapter).setData(mViewModel.resultadoBusqueda.results)
+        (binding.rvProductos.adapter as ProductDashboardAdapter)
+            .setData(productDashboardViewModel.searchResults.results)
+
         when (estado) {
             Estado.CARGANDO -> {
                 showProgressBar()
             }
             Estado.EXITO -> {
                 hideProgressBar()
-                if (mViewModel.resultadoBusqueda.results.isNullOrEmpty()) {
+                if (productDashboardViewModel.searchResults.results.isNullOrEmpty()) {
                     binding.tvCantidadBusqueda.text = "SIN RESULTADOS"
                     binding.clSinResultados.visibility = View.VISIBLE
                     binding.clResultadoBusqueda.visibility = View.GONE
@@ -177,42 +172,42 @@ class BandejaProductosFragment : Fragment() {
         }
     }
 
-    fun showProgressBar() {
+    private fun showProgressBar() {
         this.progressBar.visibility = View.VISIBLE
     }
 
-    fun hideProgressBar() {
+    private fun hideProgressBar() {
         this.progressBar.visibility = View.GONE
     }
 
     // TODO: 8/3/2020 el manejo de las Preferences podría implementarse el repositorio del ViewModel inyectandole el application
     // TODO: 8/4/2020 los historiales podrían guardar consigo la fecha de inserción para usar como parámetro de ordenamiento 
-    private fun obtenerHistorialBusqueda(): HistorialBusqueda {
+    private fun getSearchHistory(): SearchHistory {
         val preferences = this.requireActivity()
             .getSharedPreferences(GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE)
-            ?: return HistorialBusqueda()
-        var historialSerializado: String
+            ?: return SearchHistory()
+        val serializedHistory: String
         return try {
-            historialSerializado =
-                preferences.getString(AppConstants.HISTORIAL_BUSQUEDA_KEY, "") ?: ""
-            gSON.fromJson(historialSerializado, HistorialBusqueda::class.java)
+            serializedHistory =
+                preferences.getString(AppConstants.SEARCH_HISTORY_KEY, "") ?: ""
+            gSON.fromJson(serializedHistory, SearchHistory::class.java)
         } catch (e: Exception) {
             Log.e(
                 AppConstants.ETAG_SHARED_PREFERENCES,
                 e.localizedMessage
                     ?: "Excepcion al obtener el historial de búsqueda en Shared Preferences Globales."
             )
-            HistorialBusqueda()
+            SearchHistory()
         }
     }
 
-    private fun actualizarHistorialBusqueda(historial: HistorialBusqueda): Boolean {
-        val historialSerializado = gSON.toJson(historial)
+    private fun updateSearchHistory(searchHistory: SearchHistory): Boolean {
+        val serializedHistory = gSON.toJson(searchHistory)
         val preferences = this.requireActivity()
             .getSharedPreferences(GLOBAL_SHARED_PREFERENCES, Context.MODE_PRIVATE) ?: return false
         return try {
             with(preferences.edit()) {
-                putString(AppConstants.HISTORIAL_BUSQUEDA_KEY, historialSerializado)
+                putString(AppConstants.SEARCH_HISTORY_KEY, serializedHistory)
                 commit()
             }
             true

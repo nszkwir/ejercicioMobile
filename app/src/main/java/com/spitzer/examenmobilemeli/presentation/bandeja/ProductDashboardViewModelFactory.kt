@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.Dispatchers
 
-class BandejaProductosViewModelFactory : ViewModelProvider.NewInstanceFactory() {
+class ProductDashboardViewModelFactory : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelo: Class<T>): T {
-        return BandejaProductosViewModel(Dispatchers.Main) as T
+        return ProductDashboardViewModel(Dispatchers.Main) as T
     }
 }
