@@ -15,5 +15,5 @@ data class Seller(
     @SerializedName("real_estate_agency")
     var realEstateAgency: Boolean = false,
     @SerializedName("tags")
-    var tags: List<String>? = listOf()
+    var tags: List<String>? = null
 ) : Parcelable

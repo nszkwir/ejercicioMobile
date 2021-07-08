@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.spitzer.examenmobilemeli.data.ProductSearch
+import com.spitzer.examenmobilemeli.repository.IProductRepository
 import com.spitzer.examenmobilemeli.repository.ProductRepository
 import com.spitzer.examenmobilemeli.utils.Event
-import com.spitzer.network.Estado
+import com.spitzer.network.ViewState
 import com.spitzer.network.ResultData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -14,18 +15,18 @@ import kotlin.coroutines.CoroutineContext
 
 class ProductDashboardViewModel(
     override val coroutineContext: CoroutineContext,
-    private val repository: ProductRepository = ProductRepository()
+    private val repository: IProductRepository = ProductRepository()
 ) : ViewModel(), CoroutineScope {
 
     var searchText: String = ""
     var searchResults: ProductSearch = ProductSearch()
 
-    private val searchResponseState = MutableLiveData<Event<Estado>>()
-    val searchResponse: LiveData<Event<Estado>> get() = searchResponseState
+    private val searchResponseState = MutableLiveData<Event<ViewState>>()
+    val searchResponse: LiveData<Event<ViewState>> get() = searchResponseState
 
     fun searchProducts(query: String) {
         searchText = query
-        searchResponseState.value = Event(Estado.CARGANDO)
+        searchResponseState.value = Event(ViewState.CARGANDO)
         this.getProducts(query)
     }
 
@@ -34,14 +35,18 @@ class ProductDashboardViewModel(
             is ResultData.Success -> {
                 if (result.data != null) {
                     searchResults = result.data ?: ProductSearch()
-                    searchResponseState.value = Event(Estado.EXITO)
+                    searchResponseState.value = Event(ViewState.EXITO)
                 } else {
                     searchResults = ProductSearch()
-                    searchResponseState.value = Event(Estado.ERROR)
+                    searchResponseState.value = Event(ViewState.ERROR)
                 }
             }
             is ResultData.Error -> {
-                searchResponseState.value = Event(Estado.SIN_CONEXION_INTERNET)
+                if (result.isNetworkError()) {
+                    searchResponseState.value = Event(ViewState.SIN_CONEXION_INTERNET)
+                } else {
+                    searchResponseState.value = Event(ViewState.ERROR)
+                }
             }
         }
     }

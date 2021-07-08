@@ -1,29 +1,25 @@
 package com.spitzer.examenmobilemeli.presentation.buscador
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.spitzer.examenmobilemeli.R
-import com.spitzer.examenmobilemeli.interfaces.IClickListener
+import com.spitzer.examenmobilemeli.databinding.ItemSearchHistoryBinding
 import com.spitzer.examenmobilemeli.models.SearchHistory
+import com.spitzer.examenmobilemeli.utils.listenToClick
 
-class SearchHistoryAdapter(searchHistory: SearchHistory, var listener: IClickListener) :
+class SearchHistoryAdapter(searchHistory: SearchHistory) :
     RecyclerView.Adapter<SearchHistoryAdapter.ViewHolder>() {
 
     var items: ArrayList<String> = searchHistory.busqueda_string
-    var itemsCopy: ArrayList<String> = ArrayList(items)
-    var viewHolder: ViewHolder? = null
+    private var itemsCopy: ArrayList<String> = ArrayList(items)
+    lateinit var onItemClick: (String) -> Unit
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_search_history, parent, false)
-        viewHolder =
-            ViewHolder(
-                view,
-                listener
-            )
-        return viewHolder!!
+    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
+        val item =
+            ItemSearchHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(item).listenToClick { position, _ ->
+            onItemClick(items[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -31,9 +27,7 @@ class SearchHistoryAdapter(searchHistory: SearchHistory, var listener: IClickLis
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-        holder.itemView.tvBusqueda.text = item
-        holder.bind(item)
+        holder.bind(items[position])
     }
 
     fun filter(searchString: String) {
@@ -46,24 +40,15 @@ class SearchHistoryAdapter(searchHistory: SearchHistory, var listener: IClickLis
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View, listener: IClickListener) : RecyclerView.ViewHolder(itemView),
-        View.OnClickListener {
-        var view = itemView
-        var listener: IClickListener? = null
+    fun onItemClickFunction(itemClickFunction: (String) -> Unit) {
+        onItemClick = itemClickFunction
+    }
 
-        init {
-            this.listener = listener
-            view.setOnClickListener(this)
-        }
-
+    inner class ViewHolder(
+        private val itemBinding: ItemSearchHistoryBinding
+    ) : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(item: String) {
-            with(itemView) {
-                tvBusqueda.text = item
-            }
-        }
-
-        override fun onClick(v: View?) {
-            this.listener?.onClick(v!!, adapterPosition)
+            itemBinding.tvBusqueda.text = item
         }
     }
 }

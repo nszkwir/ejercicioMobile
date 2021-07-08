@@ -1,6 +1,7 @@
 package com.spitzer.examenmobilemeli
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.spitzer.examenmobilemeli.databinding.ActivityMainBinding
 
@@ -13,5 +14,13 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         setSupportActionBar(binding.toolbar)
+    }
+
+    fun showProgressBar() {
+        binding.clProgressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar() {
+        binding.clProgressBar.visibility = View.GONE
     }
 }

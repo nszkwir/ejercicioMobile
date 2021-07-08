@@ -21,5 +21,5 @@ data class Attribute(
     @SerializedName("value_name")
     var valueName: String = "",
     @SerializedName("value_struct")
-    var valueStruct: String? = null
+    var valueStruct: ValueStruct? = null
 ) : Parcelable

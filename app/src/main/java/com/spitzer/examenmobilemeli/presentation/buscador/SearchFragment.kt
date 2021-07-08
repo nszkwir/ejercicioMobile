@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.spitzer.examenmobilemeli.databinding.FragmentSearchBinding
-import com.spitzer.examenmobilemeli.interfaces.IClickListener
-import com.spitzer.examenmobilemeli.presentation.bandeja.SearchHistoryViewModel
+import com.spitzer.examenmobilemeli.presentation.searchhistory.SearchHistoryViewModel
+import com.spitzer.examenmobilemeli.presentation.searchhistory.SearchHistoryViewModelFactory
 import com.spitzer.examenmobilemeli.utils.hideKeyboard
 import com.spitzer.examenmobilemeli.utils.showkeyboard
 
@@ -30,8 +30,12 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        searchHistoryViewModel =
-            ViewModelProvider(requireActivity()).get(SearchHistoryViewModel::class.java)
+
+        searchHistoryViewModel = ViewModelProvider(
+            requireActivity(),
+            SearchHistoryViewModelFactory(requireContext())
+        ).get(SearchHistoryViewModel::class.java)
+
         return binding.root
     }
 
@@ -47,16 +51,10 @@ class SearchFragment : Fragment() {
 
     private fun initView() {
 
-        searchHistoryAdapter = SearchHistoryAdapter(
-            searchHistoryViewModel.searchHistory,
-            object : IClickListener {
-                override fun onClick(view: View, index: Int) {
-                    binding.svFiltro.hideKeyboard()
-                    setSearchString(searchHistoryAdapter.items[index])
-                }
-            }
-        )
-
+        searchHistoryAdapter = SearchHistoryAdapter(searchHistoryViewModel.searchHistory)
+        searchHistoryAdapter.onItemClickFunction { searchText ->
+            setSearchString(searchText)
+        }
         val searchManager =
             requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         binding.svFiltro.apply {
@@ -89,8 +87,8 @@ class SearchFragment : Fragment() {
         })
     }
 
-    fun setSearchString(stringBusqueda: String) {
-        searchHistoryViewModel.setSearchString(stringBusqueda)
+    fun setSearchString(searchString: String) {
+        searchHistoryViewModel.setSearchString(searchString)
         findNavController().popBackStack()
     }
 }

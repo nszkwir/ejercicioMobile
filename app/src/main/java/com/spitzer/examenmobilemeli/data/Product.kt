@@ -37,7 +37,7 @@ data class Product(
     @SerializedName("official_store_id")
     var officialStoreId: Int? = null,
     @SerializedName("original_price")
-    var originalPrice: String? = null,
+    var originalPrice: Double? = null,
     @SerializedName("permalink")
     var permalink: String? = "",
     @SerializedName("price")

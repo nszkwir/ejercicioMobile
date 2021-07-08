@@ -1,7 +1,13 @@
 package com.spitzer.network
 
+@Deprecated(
+    message = "Replace with ResultData",
+    replaceWith = ReplaceWith(
+        expression = "ResultData",
+        imports = [ "com.spitzer.network" ]
+    )
+)
 sealed class Resultado<out E, out V> {
-
     data class Value<out V>(val value: V) : Resultado<Nothing, V>()
     data class Error<out E>(val error: E) : Resultado<E, Nothing>()
 
@@ -13,5 +19,4 @@ sealed class Resultado<out E, out V> {
                 Error(e)
             }
     }
-
 }

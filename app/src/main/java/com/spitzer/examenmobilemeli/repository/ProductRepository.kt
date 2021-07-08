@@ -11,8 +11,8 @@ import kotlinx.coroutines.withContext
 class ProductRepository(
     private val service: IProductService = ApiClient().createService(IProductService::class.java),
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
-) {
-    suspend fun getProduct(queryString: String): ResultData<ProductSearch?> {
+) : IProductRepository {
+    override suspend fun getProduct(queryString: String): ResultData<ProductSearch?> {
         return withContext(dispatcher) {
             return@withContext safeCall { service.getProducts(queryString) }
         }
