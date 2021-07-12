@@ -1,10 +1,9 @@
 package com.spitzer.examenmobilemeli.data
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
-import java.util.ArrayList
+import kotlinx.parcelize.Parcelize
+import java.util.*
 
 @Parcelize
 data class Product(
