@@ -1,4 +1,4 @@
-package com.spitzer.examenmobilemeli.presentation.bandeja
+package com.spitzer.examenmobilemeli.presentation.dashboard
 
 import android.view.LayoutInflater
 import android.view.View

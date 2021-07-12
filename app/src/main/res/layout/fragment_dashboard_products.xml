@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.bandeja.ProductDashboardFragment">
+    tools:context=".presentation.dashboard.ProductDashboardFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,53 +13,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="2dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clBuscador"
+            <com.spitzer.uicomponents.searchcard.SearchCard
+                android:id="@+id/searchCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/buscador_bg"
-                android:focusable="false"
-                android:padding="10dp"
+                app:hintText="Buscar en Mercadolibre ..."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:searchCardRadius="25"
+                app:searchCardTextSize="14"
+                app:showCompactDesign="true" />
 
-                <TextView
-                    android:id="@+id/etSearch"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:focusable="false"
-                    android:hint="Buscar en Mercado Libre"
-                    android:maxLines="1"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/ivSearch"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:layout_editor_absoluteX="1dp"
-                    tools:layout_editor_absoluteY="33dp"/>
-
-                <ImageView
-                    android:id="@+id/ivSearch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_baseline_search_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/etSearch"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--RESULTADO BUSQUEDA-->
         <androidx.constraintlayout.widget.ConstraintLayout

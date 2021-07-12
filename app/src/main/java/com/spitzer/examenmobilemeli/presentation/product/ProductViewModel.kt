@@ -1,4 +1,4 @@
-package com.spitzer.examenmobilemeli.presentation.producto
+package com.spitzer.examenmobilemeli.presentation.product
 
 import androidx.lifecycle.ViewModel
 import com.spitzer.examenmobilemeli.data.Product

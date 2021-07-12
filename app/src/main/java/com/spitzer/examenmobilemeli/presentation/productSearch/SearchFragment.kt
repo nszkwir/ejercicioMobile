@@ -1,4 +1,4 @@
-package com.spitzer.examenmobilemeli.presentation.buscador
+package com.spitzer.examenmobilemeli.presentation.productSearch
 
 import android.app.SearchManager
 import android.content.Context
@@ -15,7 +15,7 @@ import com.spitzer.examenmobilemeli.databinding.FragmentSearchBinding
 import com.spitzer.examenmobilemeli.presentation.searchhistory.SearchHistoryViewModel
 import com.spitzer.examenmobilemeli.presentation.searchhistory.SearchHistoryViewModelFactory
 import com.spitzer.examenmobilemeli.utils.hideKeyboard
-import com.spitzer.examenmobilemeli.utils.showkeyboard
+import com.spitzer.examenmobilemeli.utils.showKeyboard
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
@@ -57,37 +57,40 @@ class SearchFragment : Fragment() {
         }
         val searchManager =
             requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        binding.svFiltro.apply {
-            setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
-            queryHint = "Buscar producto ..."
-            setIconifiedByDefault(false)
-            requestFocus()
-            showkeyboard()
-        }
+
         binding.rvBusquedasPropuestas.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = searchHistoryAdapter
             adapter?.notifyDataSetChanged()
         }
 
-        binding.svFiltro.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(s: String): Boolean {
-                setSearchString(s)
-                binding.svFiltro.hideKeyboard()
-                return true
-            }
+        binding.svFiltro.apply {
+            setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+            queryHint = "Buscar producto ..."
+            setIconifiedByDefault(false)
+            requestFocus()
+            showKeyboard()
 
-            override fun onQueryTextChange(s: String): Boolean {
-                (binding.rvBusquedasPropuestas.adapter as SearchHistoryAdapter).apply {
-                    filter(s)
-                    notifyDataSetChanged()
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(searchString: String): Boolean {
+                    setSearchString(searchString)
+                    binding.svFiltro.hideKeyboard()
+                    return true
                 }
-                return true
-            }
-        })
+
+                override fun onQueryTextChange(searchString: String): Boolean {
+                    (binding.rvBusquedasPropuestas.adapter as SearchHistoryAdapter).apply {
+                        filter(searchString)
+                        notifyDataSetChanged()
+                    }
+                    return true
+                }
+            })
+        }
     }
 
     fun setSearchString(searchString: String) {
+        binding.svFiltro.hideKeyboard()
         searchHistoryViewModel.setSearchString(searchString)
         findNavController().popBackStack()
     }

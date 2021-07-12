@@ -1,4 +1,4 @@
-package com.spitzer.examenmobilemeli.presentation.buscador
+package com.spitzer.examenmobilemeli.presentation.productSearch
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

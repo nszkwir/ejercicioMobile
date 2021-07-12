@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.buscador.SearchFragment">
+    tools:context=".presentation.productSearch.SearchFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/svFiltro"
-            style="@style/ThemeOverlay.AppCompat.Light"
+            style="@style/ThemeOverlay.MaterialComponents.Light"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:iconifiedByDefault="false"

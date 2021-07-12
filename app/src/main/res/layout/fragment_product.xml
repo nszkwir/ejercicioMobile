@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.producto.ProductFragment" >
+    tools:context=".presentation.product.ProductFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,7 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
 
-<!--CABECERA-->
+                <!--CABECERA-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clCabecera"
                     android:layout_width="match_parent"
@@ -26,37 +25,39 @@
                     android:layout_marginTop="10dp"
                     android:paddingStart="@dimen/padding_principal_producto"
                     android:paddingEnd="@dimen/padding_principal_producto"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/tvCondicionArticulo"
+                        style="@style/TextoSecundario"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/prueba_condicion_articulo"
-                        style="@style/TextoSecundario"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <View
                         android:id="@+id/vDivisorVertical"
                         android:layout_width="1dp"
-                        android:layout_marginStart="5dp"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
                         android:background="@color/grisDivisor"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tvCondicionArticulo"/>
+                        app:layout_constraintStart_toEndOf="@+id/tvCondicionArticulo"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/tvCantidadVendidos"
+                        style="@style/TextoSecundario"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="@string/prueba_vendidos_articulo"
-                        style="@style/TextoSecundario"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/vDivisorVertical" />
+                        app:layout_constraintStart_toEndOf="@+id/vDivisorVertical"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--TITULO-->
+                <!--TITULO-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clTitulo"
                     android:layout_width="match_parent"
@@ -64,8 +65,8 @@
                     android:layout_marginTop="10dp"
                     android:paddingStart="@dimen/padding_principal_producto"
                     android:paddingEnd="@dimen/padding_principal_producto"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clCabecera">
 
                     <TextView
@@ -78,18 +79,18 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--IMAGEN-->
+                <!--IMAGEN-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clImagen"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginTop="15dp"
                     android:maxHeight="300dp"
                     android:minHeight="150dp"
-                    android:layout_marginTop="15dp"
                     android:paddingStart="@dimen/padding_principal_producto"
                     android:paddingEnd="@dimen/padding_principal_producto"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clTitulo">
 
                     <ImageView
@@ -97,13 +98,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/ic_clock_24"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--PRECIO-->
+                <!--PRECIO-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clPrecio"
                     android:layout_width="match_parent"
@@ -111,28 +112,30 @@
                     android:layout_marginTop="15dp"
                     android:paddingStart="@dimen/padding_principal_producto"
                     android:paddingEnd="@dimen/padding_principal_producto"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clImagen">
+
                     <TextView
                         android:id="@+id/tvCash"
+                        style="@style/TextoPrecio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="$"
-                        style="@style/TextoPrecio"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/tvPrecioArticulo"
+                        style="@style/TextoPrecio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="@string/prueba_precio_articulo"
-                        style="@style/TextoPrecio"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tvCash" />
+                        app:layout_constraintStart_toEndOf="@+id/tvCash"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--ENVIO-->
+                <!--ENVIO-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clEnvio"
                     android:layout_width="match_parent"
@@ -140,8 +143,8 @@
                     android:layout_marginTop="15dp"
                     android:paddingStart="@dimen/padding_principal_producto"
                     android:paddingEnd="@dimen/padding_principal_producto"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clPrecio">
 
                     <ImageView
@@ -149,21 +152,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:src="@drawable/ic__local_shipping_24"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/tvEnvio"
+                        style="@style/TextoDetalle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/prueba_envio_articulo"
-                        style="@style/TextoDetalle"
                         android:layout_marginStart="10dp"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@string/prueba_envio_articulo"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/ivShipping"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--PAGO-->
+                <!--PAGO-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clPago"
                     android:layout_width="match_parent"
@@ -171,8 +175,8 @@
                     android:layout_marginTop="5dp"
                     android:paddingStart="@dimen/padding_principal_producto"
                     android:paddingEnd="@dimen/padding_principal_producto"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clEnvio">
 
                     <ImageView
@@ -180,32 +184,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:src="@drawable/ic__credit_card_24"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/tvPago"
+                        style="@style/TextoDetalle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/prueba_pago_articulo"
-                        style="@style/TextoDetalle"
                         android:layout_marginStart="10dp"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@string/prueba_pago_articulo"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/ivCard"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--DIVISOR-->
+                <!--DIVISOR-->
                 <View
                     android:id="@+id/vDivisorHorizontalInfo"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="25dp"
-                    android:background="@color/grisDivisor"
                     android:alpha="0.6"
-                    app:layout_constraintTop_toBottomOf="@+id/clPago"
+                    android:background="@color/grisDivisor"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-<!--INFO PRODUCTO-->
+                    app:layout_constraintTop_toBottomOf="@+id/clPago" />
+                <!--INFO PRODUCTO-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clInformacionProducto"
                     android:layout_width="match_parent"
@@ -213,30 +218,30 @@
                     android:layout_marginTop="10dp"
                     android:paddingStart="@dimen/padding_principal_producto"
                     android:paddingEnd="@dimen/padding_principal_producto"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vDivisorHorizontalInfo">
 
                     <TextView
                         android:id="@+id/tvInfoProd"
+                        style="@style/TextoSubtitulo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/prueba_info_articulo"
-                        style="@style/TextoSubtitulo"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tvInfoKeyValue"
+                        style="@style/TextoDetalle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/prueba_detalle_articulo"
                         android:layout_marginTop="5dp"
-                        style="@style/TextoDetalle"
-                        app:layout_constraintTop_toBottomOf="@+id/tvInfoProd"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        android:text="@string/prueba_detalle_articulo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvInfoProd" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--BOTONES-->
+                <!--BOTONES-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/clBotones"
                     android:layout_width="match_parent"
@@ -244,37 +249,39 @@
                     android:layout_marginTop="45dp"
                     android:paddingStart="@dimen/padding_principal_producto"
                     android:paddingEnd="@dimen/padding_principal_producto"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/clInformacionProducto">
 
-                    <TextView
-                        android:id="@+id/btnComprarAhora"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button1"
+                        style="@style/blueContainedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/ButtonComprarAhora"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Comprar ahora"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/btnAgregarCarrito"
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button2"
+                        style="@style/blueOutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        style="@style/ButtonAgegarCarrito"
-                        app:layout_constraintTop_toBottomOf="@+id/btnComprarAhora"
+                        android:text="Agregar al carrito"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"/>
+                        app:layout_constraintTop_toBottomOf="@+id/button1" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/clBotones"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/clBotones" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

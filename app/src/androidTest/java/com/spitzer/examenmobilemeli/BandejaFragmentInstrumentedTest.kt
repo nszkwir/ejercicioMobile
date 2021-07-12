@@ -2,7 +2,7 @@ package com.spitzer.examenmobilemeli
 
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.spitzer.examenmobilemeli.presentation.bandeja.ProductDashboardFragment
+import com.spitzer.examenmobilemeli.presentation.dashboard.ProductDashboardFragment
 import com.spitzer.examenmobilemeli.utils.AppConstants.ETAG_TEST
 import com.spitzer.network.ViewState
 import org.junit.Test

@@ -1,11 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="materialButtonStyle">@style/customContainedButton</item>
+        <item name="materialButtonOutlinedStyle">@style/customOutlinedButton</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -13,14 +14,68 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="MainActivityTheme" parent="AppTheme.NoActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="SplashScreenTheme" parent="MainActivityTheme">
+        <item name="android:windowBackground">@drawable/splashscreen</item>
+    </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="customContainedButton" parent="Widget.MaterialComponents.Button">
+        <item name="shapeAppearance">@style/customContainedButtonTheme</item>
+        <item name="android:textAppearance">@style/customTextForMaterialButtons</item>
+    </style>
+
+    <style name="customContainedButtonTheme">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
+    </style>
+
+    <style name="customOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="shapeAppearance">@style/customOutlinedButtonTheme</item>
+        <item name="android:textAppearance">@style/customTextForMaterialButtons</item>
+    </style>
+
+    <style name="customOutlinedButtonTheme">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
+    </style>
+
+    <style name="blueOutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:padding">10dp</item>
+        <item name="strokeColor">@color/azulBotones</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">@color/outline_button_text_color</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0.001</item>
+        <item name="rippleColor">@color/outline_button_ripple_color</item>
+    </style>
+
+    <style name="blueContainedButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/contained_button_text_color</item>
+        <item name="backgroundTint">@color/contained_button_background_tint</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:letterSpacing">0.001</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="rippleColor">@color/contained_button_ripple_color</item>
+    </style>
+
+    <style name="customTextForMaterialButtons">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
 
     <!-- Styles para TextViews. -->
     <style name="TextoApp">
-<!--        <item name="android:fontFamily">Roboto</item>-->
+        <!--        <item name="android:fontFamily">Roboto</item>-->
     </style>
 
     <style name="TextoGrisClaro" parent="TextoApp">
@@ -83,7 +138,6 @@
         <item name="android:textSize">@dimen/texto_subtitulo</item>
     </style>
 
-
     <style name="Button">
         <item name="android:textAlignment">center</item>
         <item name="android:padding">10dp</item>
@@ -103,8 +157,5 @@
         <item name="android:textColor">@color/azulBotones</item>
         <item name="android:background">@drawable/btn_agregar_carrito_bg</item>
         <item name="android:textSize">@dimen/texto_btn_agregar_carrito</item>
-
     </style>
-
-
 </resources>

@@ -1,4 +1,4 @@
-package com.spitzer.examenmobilemeli.presentation.bandeja
+package com.spitzer.examenmobilemeli.presentation.dashboard
 
 import android.os.Bundle
 import android.util.Log
@@ -83,7 +83,7 @@ class ProductDashboardFragment : Fragment() {
             }
         }
 
-        binding.clBuscador.setOnClickListener {
+        binding.searchCard.onClickFunction {
             val action =
                 ProductDashboardFragmentDirections
                     .actionProductDashboardFragmentToSearchFragment(
@@ -91,8 +91,6 @@ class ProductDashboardFragment : Fragment() {
                     )
             findNavController().navigate(action)
         }
-
-        binding.etSearch.text = productDashboardViewModel.searchText
 
         binding.clBarraCantidadResultados.visibility =
             if (productDashboardViewModel.searchResults.results.isNotEmpty()) {
@@ -108,11 +106,14 @@ class ProductDashboardFragment : Fragment() {
     private fun defineObservables() {
 
         searchHistoryViewModel.search.observeEvent(viewLifecycleOwner) { searchText ->
-            binding.etSearch.text = searchText
+
             if (searchText.isNotBlank()) {
+                binding.searchCard.setText(searchText)
                 searchHistoryViewModel.updateSearchHistory(searchText)
                 binding.clBarraCantidadResultados.visibility = View.GONE
                 productDashboardViewModel.searchProducts(searchText)
+            } else {
+                binding.searchCard.setText("Buscar en Mercado Libre ...")
             }
         }
 

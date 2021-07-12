@@ -1,4 +1,4 @@
-package com.spitzer.examenmobilemeli.presentation.producto
+package com.spitzer.examenmobilemeli.presentation.product
 
 import android.os.Bundle
 import android.view.LayoutInflater

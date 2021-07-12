@@ -1,4 +1,4 @@
-package com.spitzer.examenmobilemeli.presentation.bandeja
+package com.spitzer.examenmobilemeli.presentation.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/ProductDashboardFragment"
-        android:name="com.spitzer.examenmobilemeli.presentation.bandeja.ProductDashboardFragment"
+        android:name="com.spitzer.examenmobilemeli.presentation.dashboard.ProductDashboardFragment"
         android:label="@string/bandeja_productos"
         tools:layout="@layout/fragment_dashboard_products">
 
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/ProductFragment"
-        android:name="com.spitzer.examenmobilemeli.presentation.producto.ProductFragment"
+        android:name="com.spitzer.examenmobilemeli.presentation.product.ProductFragment"
         android:label="@string/producto_fragment_label"
         tools:layout="@layout/fragment_product">
         <argument
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/SearchFragment"
-        android:name="com.spitzer.examenmobilemeli.presentation.buscador.SearchFragment"
+        android:name="com.spitzer.examenmobilemeli.presentation.productSearch.SearchFragment"
         android:label="@string/buscador_fragment_label"
         tools:layout="@layout/fragment_search">
 
